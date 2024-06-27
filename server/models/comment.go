@@ -28,8 +28,8 @@ type Comment struct {
 	Url             string    `gorm:"type:varchar(150);not null;" json:"url"`         // 访问地址
 	UserImg         string    `gorm:"type:Text;not null;" json:"user_img"`            // 用户头像
 	NickName        string    `gorm:"type:varchar(50);not null;" json:"nick_name"`    // 昵称
-	Content         string    `gorm:"type:Text;not null;" json:"content"`             // 评论内容
-	MDContent       string    `gorm:"type:MediumText;not null;" json:"md_content"`    // markdown 渲染后评论内容
+	Content         string    `gorm:"type:Text;not null;" json:"content"`             // 渲染后评论内容
+	MDContent       string    `gorm:"type:MediumText;not null;" json:"md_content"`    // markdown评论内容
 	Device          string    `gorm:"type:varchar(100);not null;" json:"device"`      // 设备
 	IsRecycled      bool      `gorm:"type:bool;default:false;" json:"is_recycled"`    // 是否加入回收站
 	IsChecked       bool      `gorm:"type:bool;default:false" json:"is_checked"`      // 是否通过审核
@@ -171,13 +171,13 @@ func (Comment) GetByPage(page *utils.Pagination, key string, articleId, pageId, 
 
 // Create 创建评论
 func (comment *Comment) Create() error {
-	comment.MDContent = setting.LuteEngine.MarkdownStr("", comment.Content)
+	comment.Content = setting.LuteEngine.MarkdownStr("", comment.MDContent)
 	return db.Db.Create(&comment).Error
 }
 
 // Update 更新评论
 func (comment Comment) Update() error {
-	comment.MDContent = setting.LuteEngine.MarkdownStr("", comment.Content)
+	comment.Content = setting.LuteEngine.MarkdownStr("", comment.MDContent)
 
 	return db.Db.Model(&Comment{}).Where("`id` = ?", comment.ID).
 		Updates(map[string]interface{}{

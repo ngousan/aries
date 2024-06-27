@@ -367,8 +367,8 @@ func (a *ArticleHandler) ImportArticlesFromFiles(ctx *gin.Context) {
 		}
 
 		article := models.Article{
-			Content: string(bytes),
-			Title:   utils.GetFileNameOnly(file.Filename),
+			MDContent: string(bytes),
+			Title:     utils.GetFileNameOnly(file.Filename),
 		}
 		err = article.SaveFromFile()
 		if err != nil {

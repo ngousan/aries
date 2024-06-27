@@ -67,6 +67,22 @@
         <el-form-item label="标题" prop="title">
           <el-input size="small" type="text" v-model="addForm.title"></el-input>
         </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <addEditor ref="addEditor"></addEditor>
+        </el-form-item>
+        <el-row>
+          <el-col :span="16">
+            <el-form-item label="摘要" prop="summary">
+              <el-input :rows="10" type="textarea" v-model="addForm.summary"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="文章图片">
+              <h4 class="img-tip">单击打开附件</h4>
+              <img alt="" class="img-show" :src="addImageSrc" @click="handleOpenDrawer('add')"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item label="分类" prop="category_id">
@@ -125,16 +141,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="文章图片">
-          <h4 class="img-tip">单击打开附件</h4>
-          <img alt="" class="img-show" :src="addImageSrc" @click="handleOpenDrawer('add')"/>
-        </el-form-item>
-        <el-form-item label="内容" prop="content">
-          <addEditor ref="addEditor"></addEditor>
-        </el-form-item>
-        <el-form-item label="摘要" prop="summary">
-          <el-input :rows="5" type="textarea" v-model="addForm.summary"></el-input>
-        </el-form-item>
         <el-form-item>
           <el-button type="success" :loading="dialogOptions.addDraftBtnLoading"
                      @click="handleRowAdd(false)">保存为草稿
@@ -158,6 +164,22 @@
         <el-form-item label="标题" prop="title">
           <el-input size="small" type="text" v-model="editForm.title"></el-input>
         </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <editEditor :content="editForm.md_content" ref="editEditor"></editEditor>
+        </el-form-item>
+        <el-row>
+          <el-col :span="16">
+            <el-form-item label="摘要" prop="summary">
+              <el-input :rows="10" type="textarea" v-model="editForm.summary"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+              <el-form-item label="文章图片">
+              <h4 class="img-tip">单击打开附件</h4>
+              <img alt="" class="img-show" :src="editImageSrc" @click="handleOpenDrawer('edit')"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item label="分类" prop="category_id">
@@ -216,16 +238,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="文章图片">
-          <h4 class="img-tip">单击打开附件</h4>
-          <img alt="" class="img-show" :src="editImageSrc" @click="handleOpenDrawer('edit')"/>
-        </el-form-item>
-        <el-form-item label="内容" prop="content">
-          <editEditor :content="editForm.content" ref="editEditor"></editEditor>
-        </el-form-item>
-        <el-form-item label="摘要" prop="summary">
-          <el-input :rows="5" type="textarea" v-model="editForm.summary"></el-input>
-        </el-form-item>
         <el-form-item>
           <el-button type="success" :loading="dialogOptions.editDraftBtnLoading"
                      @click="handleRowEdit(false)">保存为草稿
@@ -472,14 +484,14 @@ export default {
         url: [
           { max: 255, trigger: 'blur', message: 'URL 长度不能超过 255 位' }
         ],
-        content: [
+        md_content: [
           { required: true, pattern: /^(?!\n$)/, trigger: 'blur', message: '请输入文章内容' },
           { max: 100000, trigger: 'blur', message: '内容字数不能超过 100000' }
         ],
         summary: [
           { max: 255, trigger: 'blur', message: '摘要字数不能超过 255' }
         ],
-        md_content: [
+        content: [
           { required: true, trigger: 'blur', message: '请输入文章内容' }
         ]
       },
@@ -497,14 +509,14 @@ export default {
         url: [
           { max: 255, trigger: 'blur', message: 'URL 长度不能超过 255 位' }
         ],
-        content: [
+        md_content: [
           { required: true, pattern: /^(?!\n$)/, trigger: 'blur', message: '请输入文章内容' },
           { max: 100000, trigger: 'blur', message: '内容字数不能超过 100000' }
         ],
         summary: [
           { max: 255, trigger: 'blur', message: '摘要字数不能超过 255' }
         ],
-        md_content: [
+        content: [
           { required: true, trigger: 'blur', message: '请输入文章内容' }
         ]
       },
@@ -625,6 +637,9 @@ export default {
       if (this.$refs[formName] !== undefined) {
         this.$refs[formName].resetFields()
       }
+      if (this.$refs[formName] !== 'addForm') {
+        this.$refs.addEditor.setContent('')
+      }
     },
     // 清空表单验证
     clearValidate (formName) {
@@ -656,7 +671,7 @@ export default {
           })
           this.$set(this.editForm, 'selectTagIds', tagIds)
           this.editImageSrc = this.editForm.img
-          this.$refs.editEditor.setContent(this.editForm.content)
+          this.$refs.editEditor.setContent(this.editForm.md_content)
         })
         .catch(() => {
         })
@@ -671,8 +686,8 @@ export default {
     // 添加文章事件
     handleRowAdd (isPublished) {
       // 获取编辑器组件中的文本内容
-      this.addForm.content = this.$refs.addEditor.getContent()
-      this.addForm.md_content = this.$refs.addEditor.getHTML()
+      this.addForm.content = this.$refs.addEditor.getHTML()
+      this.addForm.md_content = this.$refs.addEditor.getContent()
       // 获取 user_id
       this.addForm.user_id = Number(localStorage.getItem('uuid'))
       // 将数组转换成字符串
@@ -707,8 +722,8 @@ export default {
     // 修改文章事件
     handleRowEdit (isPublished) {
       // 获取编辑器组件中的文本内容
-      this.editForm.content = this.$refs.editEditor.getContent()
-      this.editForm.md_content = this.$refs.editEditor.getHTML()
+      this.editForm.content = this.$refs.editEditor.getHTML()
+      this.editForm.md_content = this.$refs.editEditor.getContent()
       // 将数组转换成字符串
       this.editForm.tag_ids = this.editForm.selectTagIds.join()
       this.editForm.is_published = isPublished

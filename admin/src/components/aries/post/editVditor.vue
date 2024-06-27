@@ -84,7 +84,7 @@ export default {
           }
         },
         after: () => {
-          this.setContent(this.content)
+          this.setContent(this.md_content)
         }
       })
     },
@@ -102,7 +102,7 @@ export default {
       this.contentEditor.setValue(val)
     },
     // 插入文本
-    insertContent (val) {
+    insertMDContent (val) {
       this.contentEditor.insertValue(val)
     }
   }

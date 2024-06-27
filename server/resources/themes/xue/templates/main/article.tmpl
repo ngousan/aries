@@ -18,18 +18,23 @@
                     <p class="post-title cover-title text-base lg:text-4xl xl:text-5xl md:text-3xl">{{ .subTitle }}</p>
                     <div class="post-meta">
                         <div class="post-meta-wrap">
+                        <!-- 头像
                             <img class="author-avatar"
                                  srcset="{{ .user.UserImg }}"
                                  src="{{ .user.UserImg }}" alt="">
+                        -->
+                        <!--
                             <span class="post-author">{{ .article.VisitCount }} 次访问</span>
+                        -->
                             <time class="published" datetime="2020-10-30">
                                 发布: {{ .article.CreatedAt.Format "2006-01-02" }}</time>
+                        <!--
                             <time class="published" datetime="2020-11-01">
                                 最后编辑: {{ .article.UpdatedAt.Format "2006-01-02" }}</time>
+                        -->
                         </div>
                         <div class="text-center post-categories">
                             <span class="iconfont icon-folder"> </span>
-
                             <a href="{{ .blogVars.ContextPath }}/categories/{{ .article.Category.Url }}"
                                class="post-category">
                                 · {{ .article.Category.Name }}
@@ -44,7 +49,7 @@
             {{/*        <div id="original" style="display: none">{{ .article.Content }}</div>*/}}
             <div class="container mx-auto px-4 md-content mt-8 max-w-6xl tracking-wider md:leading-relaxed sm:leading-normal cn-pd ct-container"
                  id="write">
-                {{ safe .article.MDContent }}
+                {{ safe .article.Content }}
             </div>
             <div id="tocFlag"></div>
             <aside id="toc" class="toc"></aside>

@@ -29,8 +29,8 @@ type Article struct {
 	Title            string   `gorm:"type:varchar(255);not null;" json:"title"`            // 标题
 	Summary          string   `gorm:"type:varchar(255);not null;" json:"summary"`          // 摘要
 	Img              string   `gorm:"type:varchar(255);not null;" json:"img"`              // 图片
-	Content          string   `gorm:"type:MediumText;not null;" json:"content"`            // 内容
-	MDContent        string   `gorm:"type:MediumText;not null;" json:"md_content"`         // Markdown 渲染后内容
+	Content          string   `gorm:"type:MediumText;not null;" json:"content"`            // 渲染后内容
+	MDContent        string   `gorm:"type:MediumText;not null;" json:"md_content"`         // Markdown内容
 	Keywords         string   `gorm:"type:varchar(255)" json:"keywords"`                   // SEO 关键词
 	CommentCount     uint     `gorm:"type:int;default:0;" json:"comment_count"`            // 评论数
 	VisitCount       uint     `gorm:"type:int;default:0;" json:"visit_count"`              // 浏览数
@@ -257,11 +257,11 @@ func (Article) GetByUrl(url string) (article Article, err error) {
 // Create 添加文章
 func (article Article) Create(tagIds string) error {
 	// markdown 渲染
-	article.MDContent = setting.LuteEngine.MarkdownStr("", article.Content)
+	article.Content = setting.LuteEngine.MarkdownStr("", article.MDContent)
 
 	// 若摘要为空，截取文章前 100 个字作为摘要
 	if article.Summary == "" {
-		content := []rune(utils.GetHtmlContent(article.MDContent))
+		content := []rune(utils.GetHtmlContent(article.Content))
 		if len(content) < 100 {
 			article.Summary = string(content)
 		} else {
@@ -367,11 +367,11 @@ func (article Article) Create(tagIds string) error {
 // Update 更新文章
 func (article Article) Update(tagIds string) error {
 	// markdown 渲染
-	article.MDContent = setting.LuteEngine.MarkdownStr("", article.Content)
+	article.Content = setting.LuteEngine.MarkdownStr("", article.MDContent)
 
 	// 若摘要为空，截取文章前 100 个字作为摘要
 	if article.Summary == "" {
-		content := []rune(utils.GetHtmlContent(article.MDContent))
+		content := []rune(utils.GetHtmlContent(article.Content))
 		if len(content) < 100 {
 			article.Summary = string(content)
 		} else {
@@ -381,7 +381,7 @@ func (article Article) Update(tagIds string) error {
 
 	// 若图片为空，设置默认图片
 	if article.Img == "" {
-		article.Img = "https://s1.ax1x.com/2020/06/29/NWtFJA.jpg"
+		article.Img = "https://s2.loli.net/2024/06/27/Zgv4omCsSpwPqIW.jpg"
 	}
 
 	// 若 URL 为空，设置默认 URL
@@ -655,7 +655,7 @@ func (article Article) SaveFromFile() (err error) {
 	}
 
 	article.UserId = user.ID
-	article.MDContent = setting.LuteEngine.MarkdownStr("", article.Content)
+	article.Content = setting.LuteEngine.MarkdownStr("", article.MDContent)
 
 	err = article.Create("")
 
