@@ -25,3 +25,6 @@
 
 .idea/
 .vscode/
+server/config/product.yaml
+server/yixiyilu
+server/yixiyilu.tar
