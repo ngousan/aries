@@ -9,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"path"
+	"strconv"
 
 	"github.com/gin-contrib/sessions"
 
@@ -304,7 +305,14 @@ func (a *ArticleHandler) ImportArticlesFromFiles(ctx *gin.Context) {
 		})
 		return
 	}
-
+	article := models.Article{}
+	for i, r := range multiForm.Value {
+		for _, rr := range r {
+			if i == "isPublished" {
+				article.IsPublished, _ = strconv.ParseBool(rr)
+			}
+		}
+	}
 	files := multiForm.File["file[]"]
 
 	if len(files) > 10 || len(files) == 0 {
@@ -366,10 +374,9 @@ func (a *ArticleHandler) ImportArticlesFromFiles(ctx *gin.Context) {
 			return
 		}
 
-		article := models.Article{
-			MDContent: string(bytes),
-			Title:     utils.GetFileNameOnly(file.Filename),
-		}
+		article.MDContent = string(bytes)
+		article.Title = utils.GetFileNameOnly(file.Filename)
+
 		err = article.SaveFromFile()
 		if err != nil {
 			log.Logger.Sugar().Error("error: ", err.Error())

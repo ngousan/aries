@@ -19,28 +19,29 @@
         </el-form-item>
         <el-form-item>
           <el-button size="small" type="success" @click="openUploadDialog">
-            <i class="el-icon-bottom"></i> 文件导入文章
+            <i class="el-icon-bottom"></i> 导入文章
           </el-button>
         </el-form-item>
         <el-form-item>
-          <el-select style="width: 150px" size="small" v-model="pagination.category_id" clearable placeholder="请选择分类">
-            <el-option
-              v-for="item in categories"
-              :key="item.ID"
-              :label="item.name"
-              :value="item.ID">
-            </el-option>
+          <el-select
+            style="width: 150px"
+            size="small"
+            v-model="pagination.category_id"
+            clearable
+            placeholder="请选择分类"
+          >
+            <el-option v-for="item in categories" :key="item.ID" :label="item.name" :value="item.ID"> </el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-select style="width: 150px" size="small" v-model="pagination.state" clearable
-                     placeholder="请选择文章状态">
-            <el-option
-              v-for="item in states"
-              :key="item.value"
-              :label="item.name"
-              :value="item.value">
-            </el-option>
+          <el-select
+            style="width: 150px"
+            size="small"
+            v-model="pagination.state"
+            clearable
+            placeholder="请选择文章状态"
+          >
+            <el-option v-for="item in states" :key="item.value" :label="item.name" :value="item.value"> </el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -79,35 +80,39 @@
           <el-col :span="8">
             <el-form-item label="文章图片">
               <h4 class="img-tip">单击打开附件</h4>
-              <img alt="" class="img-show" :src="addImageSrc" @click="handleOpenDrawer('add')"/>
+              <img alt="" class="img-show" :src="addImageSrc" @click="handleOpenDrawer('add')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item label="分类" prop="category_id">
-              <el-select size="small" v-model="addForm.category_id" clearable @clear="editForm.category_id=null"
-                         placeholder="请选择分类">
-                <el-option
-                  v-for="item in categories"
-                  :key="item.ID"
-                  :label="item.name"
-                  :value="item.ID">
-                </el-option>
+              <el-select
+                size="small"
+                v-model="addForm.category_id"
+                clearable
+                @clear="editForm.category_id = null"
+                placeholder="请选择分类"
+              >
+                <el-option v-for="item in categories" :key="item.ID" :label="item.name" :value="item.ID"> </el-option>
               </el-select>
               &nbsp;<el-button size="mini" type="primary" @click="handleOpenAddDraw">新增</el-button>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="标签" prop="selectTagIds">
-              <el-select size="small" filterable allow-create multiple :multiple-limit=3 v-model="addForm.selectTagIds"
-                         clearable placeholder="请选择标签" @change="selectTrigger('addForm')">
-                <el-option
-                  v-for="item in tags"
-                  :key="item.ID"
-                  :label="item.name"
-                  :value="item.ID">
-                </el-option>
+              <el-select
+                size="small"
+                filterable
+                allow-create
+                multiple
+                :multiple-limit="3"
+                v-model="addForm.selectTagIds"
+                clearable
+                placeholder="请选择标签"
+                @change="selectTrigger('addForm')"
+              >
+                <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"> </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -142,13 +147,11 @@
           </el-col>
         </el-row>
         <el-form-item>
-          <el-button type="success" :loading="dialogOptions.addDraftBtnLoading"
-                     @click="handleRowAdd(false)">保存为草稿
+          <el-button type="success" :loading="dialogOptions.addDraftBtnLoading" @click="handleRowAdd(false)"
+            >存为草稿
           </el-button>
-          <el-button type="primary" :loading="dialogOptions.addBtnLoading"
-                     @click="handleRowAdd(true)">发布
-          </el-button>
-          <el-button @click="dialogOptions.addVisible=false">取消</el-button>
+          <el-button type="primary" :loading="dialogOptions.addBtnLoading" @click="handleRowAdd(true)">发 布</el-button>
+          <el-button @click="dialogOptions.addVisible = false">取 消</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -174,37 +177,41 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-              <el-form-item label="文章图片">
+            <el-form-item label="文章图片">
               <h4 class="img-tip">单击打开附件</h4>
-              <img alt="" class="img-show" :src="editImageSrc" @click="handleOpenDrawer('edit')"/>
+              <img alt="" class="img-show" :src="editImageSrc" @click="handleOpenDrawer('edit')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
             <el-form-item label="分类" prop="category_id">
-              <el-select size="small" v-model="editForm.category_id" clearable placeholder="请选择分类"
-                         @clear="editForm.category_id=null">
-                <el-option
-                  v-for="item in categories"
-                  :key="item.ID"
-                  :label="item.name"
-                  :value="item.ID">
-                </el-option>
+              <el-select
+                size="small"
+                v-model="editForm.category_id"
+                clearable
+                placeholder="请选择分类"
+                @clear="editForm.category_id = null"
+              >
+                <el-option v-for="item in categories" :key="item.ID" :label="item.name" :value="item.ID"> </el-option>
               </el-select>
               &nbsp;<el-button size="mini" type="primary" @click="handleOpenAddDraw">新增</el-button>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="标签" prop="tag_ids">
-              <el-select size="small" filterable allow-create multiple :multiple-limit=3 v-model="editForm.selectTagIds"
-                         clearable placeholder="请选择标签" @change="selectTrigger('editForm')">
-                <el-option
-                  v-for="item in tags"
-                  :key="item.name"
-                  :label="item.name"
-                  :value="item.ID">
-                </el-option>
+              <el-select
+                size="small"
+                filterable
+                allow-create
+                multiple
+                :multiple-limit="3"
+                v-model="editForm.selectTagIds"
+                clearable
+                placeholder="请选择标签"
+                @change="selectTrigger('editForm')"
+              >
+                <el-option v-for="item in tags" :key="item.name" :label="item.name" :value="item.ID"> </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -239,52 +246,57 @@
           </el-col>
         </el-row>
         <el-form-item>
-          <el-button type="success" :loading="dialogOptions.editDraftBtnLoading"
-                     @click="handleRowEdit(false)">保存为草稿
+          <el-button type="success" :loading="dialogOptions.editDraftBtnLoading" @click="handleRowEdit(false)"
+            >存为草稿
           </el-button>
-          <el-button type="primary" :loading="dialogOptions.editBtnLoading"
-                     @click="handleRowEdit(true)">发布
+          <el-button type="primary" :loading="dialogOptions.editBtnLoading" @click="handleRowEdit(true)"
+            >发 布
           </el-button>
-          <el-button @click="dialogOptions.editVisible=false">取消</el-button>
+          <el-button @click="dialogOptions.editVisible = false">取 消</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
-
     <!-- 导入文章弹窗 -->
-    <el-dialog
-      title="导入文章"
-      :visible.sync="dialogOptions.uploadVisible"
-      width="50%">
-      <el-upload
-        ref="upload"
-        class="upload-demo"
-        :multiple="true"
-        :on-change="handleFileChange"
-        :on-exceed="handleExceed"
-        :on-remove="handleFileRemove"
-        :auto-upload="false"
-        :file-list="fileList"
-        :limit="10"
-        accept=".md"
-        action=""
-      >
-        <el-button size="small" type="primary">选择文件</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传 md 格式文件，且不超过 2 MB</div>
-      </el-upload>
-      <el-button style="margin-top: 12px" size="small" type="success"
-                 :loading="dialogOptions.uploadLoading" @click="submitUpload">导 入
-      </el-button>
-      <el-button style="margin-top: 12px" size="small"
-                 @click="dialogOptions.uploadVisible=false">取 消
-      </el-button>
+    <el-dialog title="导入文章" :visible.sync="dialogOptions.uploadVisible" width="50%">
+      <el-form>
+        <el-form-item>
+          <el-upload
+            ref="upload"
+            class="upload-demo"
+            :multiple="true"
+            :on-change="handleFileChange"
+            :on-exceed="handleExceed"
+            :on-remove="handleFileRemove"
+            :auto-upload="false"
+            :file-list="fileList"
+            :limit="10"
+            accept=".md"
+            action=""
+          >
+            <el-button size="small" type="primary">选择文件</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传 md 格式文件，且不超过 2 MB</div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="发布" prop="isPublished">
+          <el-switch v-model="isPublished"></el-switch>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            style="margin-top: 12px"
+            size="small"
+            type="success"
+            :loading="dialogOptions.uploadLoading"
+            @click="submitUpload(isPublished)"
+            >保 存
+          </el-button>
+          <el-button style="margin-top: 12px" size="small" @click="dialogOptions.uploadVisible = false"
+            >取 消
+          </el-button>
+        </el-form-item>
+      </el-form>
     </el-dialog>
-
     <!-- 添加分类抽屉 -->
-    <el-drawer
-      title="添加分类"
-      :visible.sync="drawOptions.addVisible"
-      direction="rtl"
-    >
+    <el-drawer title="添加分类" :visible.sync="drawOptions.addVisible" direction="rtl">
       <el-form ref="addCategoryForm" :model="addCategoryForm" :rules="addCategoryRules" label-width="80px">
         <el-form-item label="名称" prop="name">
           <el-input style="width: 280px" size="small" type="text" v-model="addCategoryForm.name"></el-input>
@@ -294,19 +306,12 @@
         </el-form-item>
         <el-form-item label="父级分类" prop="parent_id">
           <el-select size="small" v-model="addCategoryForm.parent_id" clearable placeholder="请选择父级分类">
-            <el-option
-              v-for="item in parentCategories"
-              :key="item.ID"
-              :label="item.name"
-              :value="item.ID">
-            </el-option>
+            <el-option v-for="item in parentCategories" :key="item.ID" :label="item.name" :value="item.ID"> </el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :loading="drawOptions.addBtnLoading"
-                     @click="handleCategoryAdd">保存
-          </el-button>
-          <el-button @click="drawOptions.addVisible=false">取消</el-button>
+          <el-button type="primary" :loading="drawOptions.addBtnLoading" @click="handleCategoryAdd">保存 </el-button>
+          <el-button @click="drawOptions.addVisible = false">取消</el-button>
         </el-form-item>
       </el-form>
     </el-drawer>
@@ -351,7 +356,7 @@ export default {
     postTitle,
     attachDrawer
   },
-  data () {
+  data() {
     return {
       columns: [
         {
@@ -471,54 +476,44 @@ export default {
         parent_id: null
       },
       addRules: {
-        user_id: [
-          { required: true, trigger: 'blur', message: '用户 ID 不能为空' }
-        ],
+        user_id: [{ required: true, trigger: 'blur', message: '用户 ID 不能为空' }],
         title: [
           { required: true, trigger: 'blur', message: '请输入文章标题' },
           { max: 255, trigger: 'blur', message: 'URL 长度不能超过 255 位' }
         ],
-        pwd: [
-          { max: 64, trigger: 'blur', message: '密码长度不能超过 64 位' }
-        ],
-        url: [
-          { max: 255, trigger: 'blur', message: 'URL 长度不能超过 255 位' }
-        ],
+        pwd: [{ max: 64, trigger: 'blur', message: '密码长度不能超过 64 位' }],
+        url: [{ max: 255, trigger: 'blur', message: 'URL 长度不能超过 255 位' }],
         md_content: [
-          { required: true, pattern: /^(?!\n$)/, trigger: 'blur', message: '请输入文章内容' },
+          {
+            required: true,
+            pattern: /^(?!\n$)/,
+            trigger: 'blur',
+            message: '请输入文章内容'
+          },
           { max: 100000, trigger: 'blur', message: '内容字数不能超过 100000' }
         ],
-        summary: [
-          { max: 255, trigger: 'blur', message: '摘要字数不能超过 255' }
-        ],
-        content: [
-          { required: true, trigger: 'blur', message: '请输入文章内容' }
-        ]
+        summary: [{ max: 255, trigger: 'blur', message: '摘要字数不能超过 255' }],
+        content: [{ required: true, trigger: 'blur', message: '请输入文章内容' }]
       },
       editRules: {
-        user_id: [
-          { required: true, trigger: 'blur', message: '用户ID不能为空' }
-        ],
+        user_id: [{ required: true, trigger: 'blur', message: '用户ID不能为空' }],
         title: [
           { required: true, trigger: 'blur', message: '请输入文章标题' },
           { max: 255, trigger: 'blur', message: 'URL 长度不能超过 255 位' }
         ],
-        pwd: [
-          { max: 64, trigger: 'blur', message: '密码长度不能超过 64 位' }
-        ],
-        url: [
-          { max: 255, trigger: 'blur', message: 'URL 长度不能超过 255 位' }
-        ],
+        pwd: [{ max: 64, trigger: 'blur', message: '密码长度不能超过 64 位' }],
+        url: [{ max: 255, trigger: 'blur', message: 'URL 长度不能超过 255 位' }],
         md_content: [
-          { required: true, pattern: /^(?!\n$)/, trigger: 'blur', message: '请输入文章内容' },
+          {
+            required: true,
+            pattern: /^(?!\n$)/,
+            trigger: 'blur',
+            message: '请输入文章内容'
+          },
           { max: 100000, trigger: 'blur', message: '内容字数不能超过 100000' }
         ],
-        summary: [
-          { max: 255, trigger: 'blur', message: '摘要字数不能超过 255' }
-        ],
-        content: [
-          { required: true, trigger: 'blur', message: '请输入文章内容' }
-        ]
+        summary: [{ max: 255, trigger: 'blur', message: '摘要字数不能超过 255' }],
+        content: [{ required: true, trigger: 'blur', message: '请输入文章内容' }]
       },
       addCategoryRules: {
         name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }],
@@ -551,10 +546,11 @@ export default {
       addImageSrc: '/image/none.jpg',
       editImageSrc: '/image/none.jpg',
       loading: false,
-      fileList: []
+      fileList: [],
+      isPublished: true
     }
   },
-  created () {
+  created() {
     this.fetchPageData()
     this.fetchCategoryData()
     this.fetchParentCategories()
@@ -562,12 +558,12 @@ export default {
   },
   methods: {
     // 分页
-    paginationCurrentChange (currentPage) {
+    paginationCurrentChange(currentPage) {
       this.pagination.currentPage = currentPage
       this.fetchPageData()
     },
     // 获取分页数据
-    fetchPageData () {
+    fetchPageData() {
       this.loading = true
       setTimeout(() => {
         getPostsByPage({
@@ -577,7 +573,7 @@ export default {
           state: this.pagination.state,
           key: this.pagination.key
         })
-          .then(res => {
+          .then((res) => {
             this.data = res.data.data
             this.pagination.total = res.data.total_num
             this.loading = false
@@ -588,40 +584,37 @@ export default {
       }, 300)
     },
     // 搜索
-    search () {
+    search() {
       this.pagination.currentPage = 1
       this.fetchPageData()
     },
     // 获取分类数据
-    fetchCategoryData () {
+    fetchCategoryData() {
       getAllCategories(0)
-        .then(res => {
+        .then((res) => {
           this.categories = res.data
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     // 获取父级分类
-    fetchParentCategories () {
+    fetchParentCategories() {
       this.parentCategories = [{ value: 0, label: '请选择父级分类' }]
       getAllParentCategories(0)
-        .then(res => {
+        .then((res) => {
           this.parentCategories = res.data
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     // 获取标签数据
-    fetchTagData () {
+    fetchTagData() {
       getAllTags()
-        .then(res => {
+        .then((res) => {
           this.tags = res.data
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     // 重置
-    reset () {
+    reset() {
       this.pagination = {
         currentPage: 1,
         pageSize: 10,
@@ -633,7 +626,7 @@ export default {
       this.fetchPageData()
     },
     // 重置表单信息
-    resetForm (formName) {
+    resetForm(formName) {
       if (this.$refs[formName] !== undefined) {
         this.$refs[formName].resetFields()
       }
@@ -642,27 +635,27 @@ export default {
       }
     },
     // 清空表单验证
-    clearValidate (formName) {
+    clearValidate(formName) {
       if (this.$refs[formName] !== undefined) {
         this.$refs[formName].clearValidate()
       }
     },
     // 打开添加文章弹窗
-    openAddDialog () {
+    openAddDialog() {
       // 显示弹窗
       this.dialogOptions.addVisible = true
       // 清空表单数据
       this.resetForm('addForm')
     },
     // 打开编辑文章弹窗
-    openEditDialog (id) {
+    openEditDialog(id) {
       // 显示弹窗
       this.dialogOptions.editVisible = true
       // 清空表单提示信息
       this.clearValidate('editForm')
       // 初始化表单数据
       getPostById(id)
-        .then(res => {
+        .then((res) => {
           this.editForm = res.data
           this.editForm.category_id = this.editForm.category_id === 0 ? null : this.editForm.category_id
           const tagIds = []
@@ -673,18 +666,17 @@ export default {
           this.editImageSrc = this.editForm.img
           this.$refs.editEditor.setContent(this.editForm.md_content)
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     // 打开导入文章弹窗
-    openUploadDialog () {
+    openUploadDialog() {
       // 显示弹窗
       this.dialogOptions.uploadVisible = true
       // 清空上传文件列表
       this.fileList = []
     },
     // 添加文章事件
-    handleRowAdd (isPublished) {
+    handleRowAdd(isPublished) {
       // 获取编辑器组件中的文本内容
       this.addForm.content = this.$refs.addEditor.getHTML()
       this.addForm.md_content = this.$refs.addEditor.getContent()
@@ -703,13 +695,12 @@ export default {
           }
           setTimeout(() => {
             addPost(this.addForm)
-              .then(res => {
+              .then((res) => {
                 this.$message.success(res.msg)
                 this.dialogOptions.addVisible = false
                 this.fetchPageData()
               })
-              .catch(() => {
-              })
+              .catch(() => {})
             if (isPublished) {
               this.dialogOptions.addBtnLoading = false
             } else {
@@ -720,7 +711,7 @@ export default {
       })
     },
     // 修改文章事件
-    handleRowEdit (isPublished) {
+    handleRowEdit(isPublished) {
       // 获取编辑器组件中的文本内容
       this.editForm.content = this.$refs.editEditor.getHTML()
       this.editForm.md_content = this.$refs.editEditor.getContent()
@@ -737,13 +728,12 @@ export default {
           }
           setTimeout(() => {
             updatePost(this.editForm)
-              .then(res => {
+              .then((res) => {
                 this.$message.success(res.msg)
                 this.dialogOptions.editVisible = false
                 this.fetchPageData()
               })
-              .catch(() => {
-              })
+              .catch(() => {})
             if (isPublished) {
               this.dialogOptions.editBtnLoading = false
             } else {
@@ -754,7 +744,7 @@ export default {
       })
     },
     // 将文章加入回收站或者恢复
-    handleRowRecycleOrRecover (row) {
+    handleRowRecycleOrRecover(row) {
       let tagIds = []
       row.tag_list.forEach((tag) => {
         tagIds.push(tag.ID)
@@ -775,12 +765,10 @@ export default {
                   this.$message.success('恢复成功')
                   this.fetchPageData()
                 })
-                .catch(() => {
-                })
+                .catch(() => {})
             }, 300)
           })
-          .catch(() => {
-          })
+          .catch(() => {})
       } else {
         this.$confirm('确定要加入回收站吗?', '加入回收站', {
           confirmButtonText: '确定',
@@ -795,16 +783,14 @@ export default {
                   this.$message.success('成功加入回收站')
                   this.fetchPageData()
                 })
-                .catch(() => {
-                })
+                .catch(() => {})
             }, 300)
           })
-          .catch(() => {
-          })
+          .catch(() => {})
       }
     },
     // 删除文章
-    handleRowRemove (id) {
+    handleRowRemove(id) {
       this.$confirm('确定要彻底删除吗?一旦彻底删除，将无法恢复', '彻底删除', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -813,37 +799,34 @@ export default {
         .then(() => {
           setTimeout(() => {
             deletePost(id)
-              .then(res => {
+              .then((res) => {
                 this.$message.success(res.msg)
                 this.fetchPageData()
               })
-              .catch(() => {
-              })
+              .catch(() => {})
           }, 300)
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     // 获取文件类型
-    getFileType (fileName) {
+    getFileType(fileName) {
       return fileName.substring(fileName.lastIndexOf('.') + 1)
     },
-    handleExceed (files, fileList) {
-      this.$message.warning(
-        `当前限制选择 10 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      )
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 10 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
     // 文件变动事件
-    handleFileChange (file, fileList) {
+    handleFileChange(file, fileList) {
       this.fileList = fileList
     },
     // 文件删除事件
-    handleFileRemove (file, fileList) {
+    handleFileRemove(file, fileList) {
       this.fileList = fileList
     },
     // 上传文件事件
-    submitUpload () {
+    submitUpload(isPublished) {
       const formData = new FormData()
+      formData.append('isPublished', isPublished)
       if (this.fileList.length === 0) {
         this.$message.error('请选择要上传的文件')
         return
@@ -865,71 +848,68 @@ export default {
       this.dialogOptions.uploadLoading = true
       setTimeout(() => {
         importPostFromFiles(formData)
-          .then(res => {
+          .then((res) => {
             this.$message.success(res.msg)
             this.dialogOptions.uploadVisible = false
             this.fetchPageData()
           })
-          .catch(() => {
-          })
+          .catch(() => {})
         this.dialogOptions.uploadLoading = false
       }, 300)
     },
     // 显示添加分类抽屉
-    handleOpenAddDraw () {
+    handleOpenAddDraw() {
       this.drawOptions.addVisible = true
       this.resetForm('addCategoryForm')
     },
     // 添加分类事件
-    handleCategoryAdd () {
+    handleCategoryAdd() {
       this.$refs.addCategoryForm.validate((valid) => {
         if (valid) {
           this.drawOptions.addBtnLoading = true
           setTimeout(() => {
             addArticleCategory(this.addCategoryForm)
-              .then(res => {
+              .then((res) => {
                 this.$message.success(res.msg)
                 this.fetchCategoryData()
                 this.fetchParentCategories()
                 this.drawOptions.addVisible = false
               })
-              .catch(() => {
-              })
+              .catch(() => {})
             this.drawOptions.addBtnLoading = false
           }, 300)
         }
       })
     },
     // 标签改变事件
-    selectTrigger (formName) {
+    selectTrigger(formName) {
       const nameList = []
-      this.parentCategories.forEach(category => {
+      this.parentCategories.forEach((category) => {
         nameList.push(category.name)
       })
       this[`${formName}`].selectTagIds.forEach((id, i) => {
-        if (typeof (id) === 'string' && nameList.indexOf(id) === -1) {
+        if (typeof id === 'string' && nameList.indexOf(id) === -1) {
           addTag({
             name: id
           })
-            .then(res => {
+            .then((res) => {
               // 用 $set 动态修改标签列表，避免视图不更新
               this.$set(this.tags, this.tags.length, res.data)
               this[`${formName}`].selectTagIds[i] = res.data.ID
             })
-            .catch(() => {
-            })
+            .catch(() => {})
         }
       })
     },
     // 向上移动文章事件
-    handleMoveUp (row, index) {
+    handleMoveUp(row, index) {
       const form = {
         id: row.ID,
         order_id: row.order_id,
         is_top: row.is_top
       }
       movePostUp(form)
-        .then(res => {
+        .then((res) => {
           this.$message.success(res.msg)
           this.fetchPageData()
           // const newData = [...this.data]
@@ -938,18 +918,17 @@ export default {
           // newData[index] = temp
           // this.data = newData
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     // 向下移动文章事件
-    handleMoveDown (row, index) {
+    handleMoveDown(row, index) {
       const form = {
         id: row.ID,
         order_id: row.order_id,
         is_top: row.is_top
       }
       movePostDown(form)
-        .then(res => {
+        .then((res) => {
           this.$message.success(res.msg)
           this.fetchPageData()
           // const newData = [...this.data]
@@ -958,16 +937,15 @@ export default {
           // newData[index] = temp
           // this.data = newData
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     // 打开弹窗
-    handleOpenDrawer (mode) {
+    handleOpenDrawer(mode) {
       this.$refs.attachDrawer.openDrawer()
       this.mode = mode
     },
     // 选中图片
-    changeClickedImg (url) {
+    changeClickedImg(url) {
       if (this.mode === 'add') {
         this.addForm.img = url
         this.addImageSrc = url
@@ -1056,7 +1034,7 @@ export default {
 }
 
 .img_checked {
-  border: #409EFF solid 2px;
+  border: #409eff solid 2px;
 }
 
 .el-tag + .el-tag {
